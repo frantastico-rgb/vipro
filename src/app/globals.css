@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-vipro-warm text-vipro-night;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
+  }
+  
+  .btn-primary {
+    @apply bg-vipro-earth hover:bg-vipro-green text-white font-medium px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border-2 border-vipro-earth text-vipro-earth hover:bg-vipro-earth hover:text-white font-medium px-8 py-3 rounded-lg transition-all duration-300;
+  }
+}
