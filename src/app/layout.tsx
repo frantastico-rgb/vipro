@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'VIPRO - Donde el viaje y la vida se encuentran',
   description: 'Experiencias auténticas de inmersión cultural en los Llanos Orientales de Colombia. Para nómadas digitales, familias conscientes y viajeros con propósito.',
   keywords: 'turismo consciente, nómadas digitales, Colombia, Llanos Orientales, Villavicencio, inmersión cultural, coworking, viajes con propósito',
-  authors: [{ name: 'VIPRO', email: 'viprovillavicencio@gmail.com' }],
+  authors: [{ name: 'VIPRO' }],
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
