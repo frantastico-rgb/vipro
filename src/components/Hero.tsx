@@ -1,103 +1,186 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { ArrowRight, Volume2, VolumeX } from 'lucide-react'
 import Link from 'next/link'
 import ViproLogoWhite from './ViproLogoWhite'
 
 export default function Hero() {
+  // Estados simples sin lógica compleja
+  const [isMuted, setIsMuted] = useState(true)
+  const [showHint, setShowHint] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const videoRef = useRef<HTMLIFrameElement>(null)
+
+  // Solo montar en cliente - sin lógica servidor/cliente
+  useEffect(() => {
+    setMounted(true)
+    // Mostrar hint después de montar - más tiempo visible
+    const timer = setTimeout(() => setShowHint(true), 2000)
+    const hideTimer = setTimeout(() => setShowHint(false), 12000) // 10 segundos visible
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(hideTimer)
+    }
+  }, [])
+
+  const handleAudioToggle = () => {
+    if (!mounted) return
+    
+    // Separar state updates para evitar batch conflicts
+    setShowHint(false)
+    
+    // Cambio directo sin func callback para evitar hydration issues
+    const newMuted = !isMuted
+    setIsMuted(newMuted)
+      
+    // Reemplazar iframe directamente con FORZAR AUTOPLAY
+    if (videoRef.current && videoRef.current.parentElement) {
+      const parent = videoRef.current.parentElement
+      const newIframe = document.createElement('iframe')
+        
+      // Propiedades básicas
+      newIframe.id = 'vipro-hero-video'
+      newIframe.className = 'absolute inset-0 w-full h-full object-cover scale-150'
+      newIframe.title = 'VIPRO - Fruta de la Pasión'
+      newIframe.frameBorder = '0'
+      newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      newIframe.allowFullscreen = true
+      
+      // URL con configuración de audio AGRESIVA
+      const baseUrl = 'https://www.youtube.com/embed/lWciuWN-Qmc'
+      
+      if (newMuted) {
+        // Silenciado - sin controles
+        newIframe.src = `${baseUrl}?autoplay=1&mute=1&loop=1&playlist=lWciuWN-Qmc&controls=0&rel=0&modestbranding=1&playsinline=1&start=3`
+      } else {
+        // Con audio - FORZAR con parámetros máximos
+        newIframe.src = `${baseUrl}?autoplay=1&mute=0&loop=1&playlist=lWciuWN-Qmc&controls=1&rel=0&modestbranding=0&playsinline=1&start=3&volume=100&enablejsapi=1&origin=http://localhost:3000&widget_referrer=http://localhost:3000`
+      }
+      
+      // Reemplazar iframe con scroll preservation
+      const scrollY = window.scrollY || window.pageYOffset
+      videoRef.current.remove()
+      parent.appendChild(newIframe)
+      
+      // Actualizar la referencia sin asignación directa
+      if (videoRef.current) {
+        Object.defineProperty(videoRef, 'current', {
+          value: newIframe,
+          writable: false,
+          configurable: true
+        })
+      }
+      
+      // Restaurar scroll
+      setTimeout(() => window.scrollTo(0, scrollY), 100)
+      
+      console.log(`🎵 Audio ${newMuted ? 'MUTED' : 'UNMUTED with controls'}`)
+      
+      if (!newMuted) {
+        console.log('🎮 TIP: Haz clic en el botón PLAY del video para activar el sonido')
+      }
+    }
+  }
+
+  // Solo renderizar cuando esté montado en cliente para evitar hydration
+  if (!mounted) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+          {/* Loading placeholder idéntico servidor/cliente */}
+          <div className="mb-8 flex flex-col items-center opacity-50">
+            <div className="w-24 h-24 mb-4 bg-white/10 rounded-full animate-pulse" />
+            <div className="h-4 w-32 bg-white/10 rounded animate-pulse" />
+          </div>
+          <div className="space-y-4">
+            <div className="h-16 bg-white/10 rounded animate-pulse" />
+            <div className="h-6 bg-white/5 rounded animate-pulse" />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <div className="relative w-full h-full">
-          {/* Video de respaldo funcional mientras configuras el tuyo */}
-          {/* OPCIÓN: Fondo con imagen de llanos + overlay atmosférico */}
-          <div className="absolute inset-0">
-            {/* Imagen de fondo de los llanos (cuando la tengas) */}
-            {/* 
-            <img 
-              src="/images/llanos-atardecer.jpg" 
-              alt="Llanos Orientales" 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            */}
-            
-            {/* Mientras tanto: Fondo gradiente que evoca los llanos */}
-            <div className="absolute inset-0 bg-gradient-to-br from-vipro-sky/20 via-vipro-earth/40 to-vipro-green/30" />
-            
-            {/* Simulación de horizonte llanero */}
-            <div 
-              className="absolute inset-0"
-              style={{
-                background: `
-                  linear-gradient(to bottom, 
-                    rgba(135, 206, 235, 0.6) 0%,    /* Cielo */
-                    rgba(135, 206, 235, 0.3) 30%,   /* Horizonte */
-                    rgba(244, 228, 193, 0.4) 60%,   /* Sabana */
-                    rgba(139, 111, 71, 0.5) 100%    /* Tierra */
-                  )
-                `,
-              }}
-            />
-            
-            {/* Texturas atmosféricas */}
-            <div 
-              className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage: `
-                  radial-gradient(circle at 70% 30%, rgba(135, 206, 235, 0.4) 0%, transparent 60%),
-                  radial-gradient(circle at 30% 70%, rgba(244, 228, 193, 0.3) 0%, transparent 50%)
-                `,
-              }}
-            />
-          </div>
-          {/* Overlay más suave para que el logo destaque */}
-          <div className="absolute inset-0 bg-vipro-night/40" />
+          {/* Video de "Fruta de la Pasión" como fondo atmosférico */}
+          <iframe
+            ref={videoRef}
+            id="vipro-hero-video"
+            className="absolute inset-0 w-full h-full object-cover scale-150"
+            src="https://www.youtube.com/embed/lWciuWN-Qmc?autoplay=1&mute=1&loop=1&playlist=lWciuWN-Qmc&controls=0&rel=0&modestbranding=1&playsinline=1&start=3"
+            title="VIPRO - Fruta de la Pasión"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+          
+          {/* Overlay gradiente para mejor legibilidad del texto */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-transparent to-black/50" />
         </div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        {/* Logo central - MÁS PROMINENTE */}
-        <div className="mb-12 flex justify-center">
-          <div className="relative">
-            {/* Halo de resplandor para destacar */}
-            <div className="absolute inset-0 bg-white/20 rounded-full blur-xl scale-150 animate-pulse" />
-            <div className="relative transform hover:scale-105 transition-transform duration-300">
-              <ViproLogoWhite 
-                size="xl" 
-                showText={false} 
-                className="drop-shadow-[0_0_30px_rgba(244,228,193,0.8)] w-32 h-32 sm:w-40 sm:h-40" 
-              />
-            </div>
+      {/* Audio Control - FIXED para estar sobre navbar fixed */}
+      <button
+        onClick={handleAudioToggle}
+        className="fixed top-20 right-4 z-[100] bg-gradient-to-r from-orange-500 to-red-500 backdrop-blur-sm border-2 border-white/40 text-white px-5 py-3 rounded-full hover:from-orange-400 hover:to-red-400 transition-all flex items-center gap-2 shadow-2xl hover:shadow-orange-500/50 hover:scale-105 font-semibold"
+        aria-label={isMuted ? 'Activar audio' : 'Silenciar audio'}
+      >
+        {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        <span className="text-sm font-bold">
+          {isMuted ? '🔇 ACTIVAR AUDIO' : '🔊 AUDIO ON'}
+        </span>
+      </button>
+
+      {/* Audio Hint - MÁS VISIBLE Y PERSISTENTE */}
+      {showHint && isMuted && (
+        <div className="fixed top-36 right-4 z-[90] bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-2xl border-2 border-orange-500 animate-bounce">
+          👆 ¡Dale clic para escuchar!
+        </div>
+      )}
+
+      {/* Content Overlay */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+        {/* VIPRO Brand Identity */}
+        <div className="mb-8 flex flex-col items-center">
+          <ViproLogoWhite className="w-24 h-24 mb-4" />
+          <div className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-transparent bg-clip-text text-sm font-semibold tracking-wider uppercase">
+            Viaja con propósito
           </div>
         </div>
-        
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
-          Donde el viaje<br />y la vida se encuentran
+
+        {/* Hero Title */}
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+          Donde el viaje<br />
+          <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-transparent bg-clip-text">
+            y la vida se encuentran
+          </span>
         </h1>
-        
-        <p className="text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-          No vendemos transporte ni cuartos. Conectamos viajeros conscientes 
-          con experiencias llaneras auténticas.
+
+        {/* Hero Subtitle */}
+        <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+          No vendemos transporte ni cuartos. Conectamos viajeros conscientes con experiencias llaneras auténticas.
         </p>
 
+        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link href="/conecta" className="btn-primary flex items-center group">
+          <Link
+            href="/conecta"
+            className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-400 hover:to-orange-400 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2"
+          >
             Conversemos
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
+            <ArrowRight className="w-5 h-5" />
           </Link>
-          
-          <Link href="/casa-luna" className="bg-white/20 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-vipro-night font-medium px-8 py-3 rounded-lg transition-all duration-300">
+          <Link
+            href="/casa-luna"
+            className="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all transform hover:scale-105"
+          >
             Conoce Casa Luna
           </Link>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse" />
-          </div>
         </div>
       </div>
     </section>

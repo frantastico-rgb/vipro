@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 import ViproLogo from './ViproLogo'
 
 interface LoadingProps {
@@ -6,10 +6,10 @@ interface LoadingProps {
   message?: string
 }
 
-const Loading: React.FC<LoadingProps> = ({ 
+const Loading = memo(function Loading({ 
   size = 'md', 
   message = 'Cargando experiencias...' 
-}) => {
+}: LoadingProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[200px] space-y-4">
       <div className="animate-pulse">
@@ -32,6 +32,6 @@ const Loading: React.FC<LoadingProps> = ({
       )}
     </div>
   )
-}
+})
 
 export default Loading

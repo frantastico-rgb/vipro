@@ -1,6 +1,37 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import PhotoGallery from '@/components/PhotoGallery'
 import { Wifi, Coffee, Mountain, Users, Sunrise, Book } from 'lucide-react'
+
+// Configuración flexible de fotos - solo agrega más al array
+const casaLunaPhotos = [
+  {
+    src: '/images/casa-luna/exterior-principal.jpg',
+    alt: 'Casa Luna - Vista exterior principal',
+    caption: 'Casa Luna: Tu hogar en los Llanos Orientales'
+  },
+  {
+    src: '/images/casa-luna/cocina-experiencia.jpg',
+    alt: 'Cocina llanera con Doña Rosa',
+    caption: 'Aprende cocina llanera auténtica con Doña Rosa'
+  },
+  {
+    src: '/images/casa-luna/llanos-paisaje.jpg',
+    alt: 'Paisaje de los Llanos Orientales',
+    caption: 'Amaneceres que inspiran desde Casa Luna'
+  },
+  // 🔥 AGREGAR MÁS FOTOS AQUÍ - El sistema se adapta automáticamente
+  // {
+  //   src: '/images/casa-luna/habitacion-1.jpg',
+  //   alt: 'Habitación privada en Casa Luna',
+  //   caption: 'Habitaciones cómodas y auténticas'
+  // },
+  // {
+  //   src: '/images/casa-luna/coworking.jpg',
+  //   alt: 'Espacio de coworking',
+  //   caption: 'Espacio de trabajo con vista a la naturaleza'
+  // },
+]
 
 const amenities = [
   {
@@ -55,6 +86,22 @@ export default function CasaLuna() {
         </div>
       </section>
 
+      {/* Galería de Fotos - Sistema flexible */}
+      <section className="section-container bg-white">
+        <div className="max-w-7xl mx-auto">
+          <PhotoGallery 
+            photos={casaLunaPhotos}
+            title="Conoce Casa Luna"
+          />
+          <div className="text-center mt-8 p-4 bg-vipro-warm/20 dark:bg-gray-800 rounded-lg border border-vipro-warm/30 dark:border-vipro-warm/40">
+            <p className="text-lg font-semibold text-gray-900 dark:text-white flex items-center justify-center gap-2">
+              <span className="text-2xl">📸</span>
+              <span>Haz clic en cualquier foto para verla en grande</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Video Tour */}
       <section className="section-container bg-white">
         <div className="max-w-5xl mx-auto">
@@ -66,6 +113,7 @@ export default function CasaLuna() {
               className="w-full h-full"
               src="https://www.youtube.com/embed/unD1svXKzC8"
               title="Casa Luna Tour Virtual"
+              loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />

@@ -154,7 +154,7 @@ export default function Conecta() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-vipro-sand/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-vipro-sand/50 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
                     placeholder="Tu nombre"
                   />
                 </div>
@@ -171,7 +171,7 @@ export default function Conecta() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-vipro-sand/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-vipro-sand/50 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -187,9 +187,9 @@ export default function Conecta() {
                     value={formData.archetype}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-vipro-sand/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-vipro-sand/50 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
                   >
-                    <option value="">Selecciona una opción</option>
+                    <option value="" className="text-gray-400 dark:text-gray-500">Selecciona una opción</option>
                     <option value="nomad">Nómada Digital</option>
                     <option value="family">Familia Aventurera</option>
                     <option value="executive">Ejecutivo en Búsqueda</option>
@@ -209,7 +209,7 @@ export default function Conecta() {
                     name="dates"
                     value={formData.dates}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-vipro-sand/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-vipro-sand/50 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all"
                     placeholder="Ej: Marzo 2026, 2 semanas"
                   />
                 </div>
@@ -226,7 +226,7 @@ export default function Conecta() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-vipro-sand/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all resize-none"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-vipro-sand/50 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-vipro-earth transition-all resize-none"
                     placeholder="¿Qué buscas en esta experiencia? ¿Qué te atrajo de VIPRO?"
                   />
                 </div>
@@ -244,7 +244,7 @@ export default function Conecta() {
                   {isSubmitting ? (
                     <>
                       <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
-                      Enviando a viprovillavicencio@gmail.com...
+                      Enviando mensaje...
                     </>
                   ) : submitStatus === 'rate-limit' ? (
                     <>
@@ -266,7 +266,7 @@ export default function Conecta() {
                     <div className="text-green-800">
                       <p className="font-semibold">¡Mensaje enviado exitosamente! 🎉</p>
                       <p className="text-sm mt-1">
-                        Hemos recibido tu mensaje en <strong>viprovillavicencio@gmail.com</strong>. 
+                        Tu mensaje ha sido recibido correctamente. 
                         Te responderemos en menos de 24 horas.
                       </p>
                     </div>
