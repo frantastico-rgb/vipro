@@ -37,7 +37,7 @@ const amenities = [
   {
     icon: Wifi,
     title: 'WiFi de Alta Velocidad',
-    description: '50+ Mbps garantizados. Probado por nómadas digitales',
+    description: '400+ Mbps garantizados. Probado por nómadas digitales',
   },
   {
     icon: Coffee,
