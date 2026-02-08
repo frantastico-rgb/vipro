@@ -91,9 +91,9 @@ export default function Conecta() {
             </div>
 
             {/* Opciones de contacto */}
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
-              {/* WhatsApp */}
-              <a
+            <div className="flex justify-center mb-12">
+              {/* WhatsApp - Temporalmente deshabilitado */}
+              {/* <a
                 href="https://wa.me/573001234567?text=Hola%2C%20me%20interesa%20conocer%20más%20sobre%20VIPRO"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -110,14 +110,14 @@ export default function Conecta() {
                     Respuesta en menos de 24h
                   </p>
                 </div>
-              </a>
+              </a> */}
 
               {/* Video call */}
               <a
-                href="https://calendly.com/vipro/conversacion-inicial"
+                href="https://calendly.com/viprovillavicencio/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-4 group"
+                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-4 group max-w-md"
               >
                 <div className="w-12 h-12 rounded-full bg-vipro-earth flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -279,7 +279,7 @@ export default function Conecta() {
                     <div className="text-red-800">
                       <p className="font-semibold">Error al enviar mensaje</p>
                       <p className="text-sm mt-1">
-                        {errorMessage || 'Hubo un problema técnico. Por favor intenta por WhatsApp.'}
+                        {errorMessage || 'Hubo un problema técnico. Por favor intenta agendar una videollamada.'}
                       </p>
                     </div>
                   </div>
@@ -292,7 +292,7 @@ export default function Conecta() {
                       <p className="font-semibold">Calma, viajero consciente 🌱</p>
                       <p className="text-sm mt-1">
                         Para evitar spam, permite 1 minuto entre envíos. 
-                        Mientras tanto, puedes contactarnos por WhatsApp.
+                        Mientras tanto, puedes agendar una videollamada.
                       </p>
                     </div>
                   </div>

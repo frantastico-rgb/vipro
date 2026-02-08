@@ -41,9 +41,9 @@ export default function Footer() {
                 <MapPin size={18} className="mr-2 mt-1 flex-shrink-0" />
                 <span>Villavicencio, Meta<br/>Colombia</span>
               </div>
-              <a href="https://instagram.com/vipro.co" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-vipro-sand transition-colors">
+              <a href="https://www.instagram.com/viprocolombia/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-vipro-sand transition-colors">
                 <Instagram size={18} className="mr-2" />
-                @vipro.co
+                @viprocolombia
               </a>
             </div>
           </div>
